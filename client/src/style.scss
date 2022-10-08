@@ -172,6 +172,7 @@ $lightGreen: #b9e7e7;
             }
             p {
               font-size: 16px;
+              word-break: break-all;
             }
             button {
               width: max-content;
@@ -293,6 +294,8 @@ $lightGreen: #b9e7e7;
         gap: 20px;
 
         .content{
+
+            
             flex: 5;
             display: flex;
             flex-direction: column;
@@ -304,13 +307,16 @@ $lightGreen: #b9e7e7;
             }
             .editContainer{
                 height: 100%;
-                // width: 100%;
-                // border: 1px solid lightgray;
-                // overflow-y: scroll;
+               
+                // overflow: scroll;
                 
                 .editor{
                     height: calc(100% - 42px);
                     border: none;
+
+                    * {
+                      word-break: break-all;
+                    }
                 }
             }
         }

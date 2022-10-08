@@ -4,6 +4,8 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  // const [widthClient, setWidthClient] = useState(window.innerWidth);
+  // console.log(widthClient)
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
@@ -17,11 +19,15 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
+
+
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider
+      value={{ currentUser, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
