@@ -38,7 +38,7 @@ const Single = () => {
     fetchData();
     window.scroll(0,0)
   }, [postId]);
-
+console.log(post);
 
   return (
     <div className="single">
@@ -60,7 +60,7 @@ const Single = () => {
           )}
         </div>
         <h1>{post.title}</h1>
-        {parse(post.desc)}
+        {post.desc && parse(post.desc)}
       </div>
       <Menu cat={post.cat} />
     </div>
