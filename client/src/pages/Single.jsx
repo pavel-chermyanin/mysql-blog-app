@@ -38,7 +38,7 @@ const Single = () => {
     fetchData();
     window.scroll(0,0)
   }, [postId]);
-console.log(post);
+// console.log(post);
 
   return (
     <div className="single">
@@ -50,7 +50,7 @@ console.log(post);
             <span>{post.username}</span>
             <p>Posted {moment(post.date).fromNow()}</p>
           </div>
-          {currentUser.username === post.username && (
+          {currentUser?.username === post.username && (
             <div className="edit">
               <Link to={`/write?edit=2`} state={post}>
                 <img src={Edit} alt="" />

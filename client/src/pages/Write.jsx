@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useRef } from "react";
+import { useEffect } from "react";
 
 const Write = () => {
   const state = useLocation().state;
@@ -14,9 +15,11 @@ const Write = () => {
   const [cat, setCat] = useState(state?.cat || "");
 
   const valueRef = useRef(null);
+  const navigate = useNavigate();
 
   const upload = async () => {
     try {
+      if(state && !file) return state.img
       const formData = new FormData();
       formData.append("file", file);
       const res = await axios.post("/upload", formData);
@@ -28,14 +31,18 @@ const Write = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const imgUrl = await upload();
+    let imgUrl;
+    
+       imgUrl = await upload();
+
+
     try {
       state
         ? await axios.put(`/posts/${state.id}`, {
             title,
             desc: value,
             cat,
-            img: file ? imgUrl : "",
+            img: imgUrl ? imgUrl : "",
           })
         : await axios.post(`/posts/`, {
             title,
@@ -44,10 +51,24 @@ const Write = () => {
             img: file ? imgUrl : "",
             date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
           });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    // if(state) {
+    //   const img = require(`../../public/upload/${state.img}`)
+    //   setFile(img);
+    // }
+    
+    // const fetchImg = async () => {
+    //   // сщтые
+    //   const res = await axios.get()
+    // }
+    // state && setFile(`../upload/${state.img}`);
+  }, [])
 
   return (
     <div className="add">
@@ -57,10 +78,10 @@ const Write = () => {
           type="text"
           placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
+          value={title}
         />
         <div className="editContainer">
           <ReactQuill
-            // style={{ width: widthHook }}
             className="editor"
             theme="snow"
             value={value}
