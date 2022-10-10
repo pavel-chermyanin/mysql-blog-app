@@ -43,7 +43,7 @@ const Single = () => {
   return (
     <div className="single">
       <div className="content">
-        <img src={`../upload/${post?.img}`} alt="" />
+        {post.img && <img src={`../upload/${post.img}`} alt="" />}
         <div className="user">
           {post.userImg && <img src={post.userImg} alt="" />}
           <div className="info">
@@ -60,7 +60,7 @@ const Single = () => {
           )}
         </div>
         <h1>{post.title}</h1>
-        {post.desc && parse(post.desc)}
+        <p>{post.desc && parse(post.desc)}</p>
       </div>
       <Menu cat={post.cat} />
     </div>
